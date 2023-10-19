@@ -1,6 +1,11 @@
+from django import forms
 from django.shortcuts import render
 
 from . import util
+
+class NewPageForm(forms.Form):
+    title = forms.CharField(label="Title")
+    content = forms.CharField(label="Content", widget=forms.Textarea)
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -45,4 +50,15 @@ def search(request):
         return render(request, "encyclopedia/index.html", {
             "entries": util.list_entries()
         })
-        
+
+# create new wiiki entry
+def new_page(request):
+    if request.method == "POST":
+        # TODO get form data
+        pass
+    # if request is not POST
+    else:
+        # open new_page.html
+        return render(request, "encyclopedia/new_page.html", {
+            "form": NewPageForm()
+        })
