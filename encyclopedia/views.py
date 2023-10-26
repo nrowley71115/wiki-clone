@@ -53,8 +53,25 @@ def search(request):
 
 # create new wiiki entry
 def new_page(request):
+    # if request is POST
     if request.method == "POST":
-        # TODO get form data
+        # get form data
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+        print(f'Title: {title}, Content: {content}')
+        # validate title doesn't already exist
+        if title in util.list_entries():
+            return render(request, "encyclopedia/error.html", {
+                "error": "Page already exists"
+            })
+        # validate title or content is not empty
+        if content == '' or title == '':
+            return render(request, "encyclopedia/error.html", {
+                "error": "Content cannot be empty"
+            })
+        # TODO translate to markdown
+        # TODO save to entries directory
+        # TODO redirect to new page
         pass
     # if request is not POST
     else:
